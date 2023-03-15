@@ -25,10 +25,24 @@ inquirer
   .prompt([
     {
       type: "list",
-      message: "Please select from the list below",
+      message: "Please select from the following options:",
       name: "task",
-      choices: ["Show all Departments", "Show all Roles", "Show all Employees"],
+      choices: ["View all Departments", "View all Roles", "View all Employees"],
     },
+
+    {
+        type: "list",
+        message: "Would you like to:",
+        name: "add",
+        choices: ["Add a Department", "Add a Role", "Add an Employee"]
+      },
+
+      {
+        type: "list",
+        message: "Would you like to update an employee role?",
+        name: "update",
+        choices: ["Yes", "No"],
+      },
   ])
 
   .then((response) => {
@@ -36,12 +50,12 @@ inquirer
     console.table(response)
     const { task } = response;
     console.log(task)
-    if (task === "Show all Departments") {
+    if (task === "View all Departments") {
       db.query("SELECT * FROM department;", function (err, results) {
         if(err) throw err
         console.table(results);
       });
-    } else if (task === "Show all Roles") {
+    } else if (task === "View all Roles") {
       db.query("SELECT * FROM role;", function (err, results) {
         console.table(results);
       });
