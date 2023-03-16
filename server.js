@@ -66,22 +66,18 @@ const init = () => {
         inquirer
             .prompt([
             {
-                type: "input",
+                type: 'input',
                 message: "Please type the name of the department that you would like to add to the list:",
-                name: "add",
-            }
+                name: 'name',
+            },
         ])
 
-            .then((answers) => {
-            const departmentName = answers.departmentAnswer;
+            .then(answers => {
             // db.query to add new department
-                db.query("INSERT INTO department `$(answers.department}` VALUES ?;", function (err, results) {
-                console.table(results);
-                init();
-              });
-        })
-      }
-    });
+                db.query("INSERT INTO department SET?;", answers) 
+                console.table(answers);
+              })
+            };
 
   //   .then((response) => {
   //     console.log(response);
@@ -130,6 +126,5 @@ const init = () => {
   //       });
   //     }
   //   });
-};
 
 init();
