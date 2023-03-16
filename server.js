@@ -74,11 +74,10 @@ const init = () => {
 
             .then(answers => {
             // db.query to add new department
-                db.query("INSERT INTO department SET?;", answers) 
+                db.query("INSERT INTO department SET ?;", answers) 
                 console.table(answers);
-              })
-            };
-
+              })}
+            })}
   //   .then((response) => {
   //     console.log(response);
   //     console.table(response);
@@ -127,4 +126,4 @@ const init = () => {
   //     }
   //   });
 
-init();
+init(); 
