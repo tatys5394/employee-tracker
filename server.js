@@ -62,6 +62,47 @@ inquirer
     } else {
       db.query("SELECT * FROM employee;", function (err, results) {
         console.table(results);
+      })}
+    })
+
+     .then((response) => {
+    console.log(response)
+    console.table(response)
+    const { add } = response;
+    console.log(add)
+    if (add === "Add a Department") {
+      db.query("INSERT INTO department;", function (err, results) {
+        if(err) throw err
+        console.table(results);
       });
-    }
-  });
+    } else if (add === "Add a Role") {
+      db.query("INSERT INTO role;", function (err, results) {
+        console.table(results);
+      });
+    } else {
+      db.query("INSERT INTO employee;", function (err, results) {
+        console.table(results);
+      })
+    }});
+
+//  .then((response) => {
+//     console.log(response)
+//     console.table(response)
+//     const { task } = response;
+//     console.log(task)
+//     if (task === "View all Departments") {
+//       db.query("SELECT * FROM department;", function (err, results) {
+//         if(err) throw err
+//         console.table(results);
+//       });
+//     } else if (task === "View all Roles") {
+//       db.query("SELECT * FROM role;", function (err, results) {
+//         console.table(results);
+//       });
+//     } else {
+//       db.query("SELECT * FROM employee;", function (err, results) {
+//         console.table(results);
+//       });
+//     }
+//   });
+
