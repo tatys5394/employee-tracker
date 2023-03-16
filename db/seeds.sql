@@ -13,11 +13,15 @@ VALUES ("coordinator", 55000, 1),
         ("executive director", 120000, 4),
         ("CEO", 150000, 5);
 
+INSERT INTO employee (first_name,last_name, role_id)
+VALUES ("Adriana", "Rodriguez", 4),
+        ("Laura", "Espinoza", 5);
 
 INSERT INTO employee (first_name,last_name, role_id, manager_id)
 VALUES ("Carlos", "Perez", 1, 1), 
-        ("Adriana", "Rodriguez", 4, 1),
-        ("Diego", "Martinez", 2, 1),
-        ("Juan", "Pepito", 3, 3),
-        ("Laura", "Espinoza", 5, 1);
+        ("Diego", "Martinez", 2, 2),
+        ("Juan", "Pepito", 3, 1);
+       
+
+
         

@@ -21,88 +21,116 @@ const db = mysql.createConnection(
   console.log("db connected")
 );
 
-inquirer
-  .prompt([
-    {
-      type: "list",
-      message: "Please select from the following options:",
-      name: "task",
-      choices: ["View all Departments", "View all Roles", "View all Employees"],
-    },
-
-    {
-        type: "list",
-        message: "Would you like to:",
-        name: "add",
-        choices: ["Add a Department", "Add a Role", "Add an Employee"]
-      },
-
+const init = () => {
+  inquirer
+    .prompt([
       {
         type: "list",
-        message: "Would you like to update an employee role?",
-        name: "update",
-        choices: ["Yes", "No"],
+        message: "Please select from the following options:",
+        name: "task",
+        choices: [
+          "View all Departments",
+          "View all Roles",
+          "View all Employees",
+          "Add a Department",
+          "Add a Role",
+          "Add an Employee",
+          "Update an employee role"
+        ],
       },
-  ])
+    ])
 
-  .then((response) => {
-    console.log(response)
-    console.table(response)
-    const { task } = response;
-    console.log(task)
-    if (task === "View all Departments") {
-      db.query("SELECT * FROM department;", function (err, results) {
-        if(err) throw err
-        console.table(results);
-      });
-    } else if (task === "View all Roles") {
-      db.query("SELECT * FROM role;", function (err, results) {
-        console.table(results);
-      });
-    } else {
-      db.query("SELECT * FROM employee;", function (err, results) {
-        console.table(results);
-      })}
-    })
+    .then((response) => {
+      // console.log(response);
+      // console.table(response);
+      const { task } = response;
+      console.log(task);
+      if (task === "View all Departments") {
+        db.query("SELECT * FROM department;", function (err, results) {
+          if (err) throw err;
+          console.table(results);
+          init();
+        });
+      } else if (task === "View all Roles") {
+        db.query("SELECT * FROM role;", function (err, results) {
+          console.table(results);
+          init();
+        });
+      } else if (task === "View all Employees") {
+        db.query("SELECT * FROM employee;", function (err, results) {
+          console.table(results);
+          init();
+        });
+      } else if (task === "Add a Department") {
+// *****************************************************************
+        inquirer
+            .prompt([
+            {
+                type: "input",
+                message: "Please type the name of the department that you would like to add to the list:",
+                name: "add",
+            }
+        ])
 
-     .then((response) => {
-    console.log(response)
-    console.table(response)
-    const { add } = response;
-    console.log(add)
-    if (add === "Add a Department") {
-      db.query("INSERT INTO department;", function (err, results) {
-        if(err) throw err
-        console.table(results);
-      });
-    } else if (add === "Add a Role") {
-      db.query("INSERT INTO role;", function (err, results) {
-        console.table(results);
-      });
-    } else {
-      db.query("INSERT INTO employee;", function (err, results) {
-        console.table(results);
-      })
-    }});
+            .then((answers) => {
+            const departmentName = answers.departmentAnswer;
+            // db.query to add new department
+                db.query("INSERT INTO department `$(answers.department}`
+                 VALUES ?;", function (err, results) {
+                console.table(results);
+                init();
+              });
+        })
+      }
+    });
 
-//  .then((response) => {
-//     console.log(response)
-//     console.table(response)
-//     const { task } = response;
-//     console.log(task)
-//     if (task === "View all Departments") {
-//       db.query("SELECT * FROM department;", function (err, results) {
-//         if(err) throw err
-//         console.table(results);
-//       });
-//     } else if (task === "View all Roles") {
-//       db.query("SELECT * FROM role;", function (err, results) {
-//         console.table(results);
-//       });
-//     } else {
-//       db.query("SELECT * FROM employee;", function (err, results) {
-//         console.table(results);
-//       });
-//     }
-//   });
+  //   .then((response) => {
+  //     console.log(response);
+  //     console.table(response);
+  //     const { add } = response;
+  //     console.log(add);
+  //     if (add === "Add a Department") {
+  //       db.query(
+  //         "INSERT INTO department (name) VALUES ?;",
+  //         function (err, results) {
+  //           if (err) throw err;
+  //           console.table(results);
+  //         }
+  //       );
+  //     } else if (add === "Add a Role") {
+  //       db.query("INSERT INTO role (name) VALUES ?;", function (err, results) {
+  //         console.table(results);
+  //       });
+  //     } else {
+  //       db.query(
+  //         "INSERT INTO employee (name) VALUES ?;",
+  //         function (err, results) {
+  //           console.table(results);
+  //         }
+  //       );
+  //     }
+  //   });
 
+  //  .then((response) => {
+  //     console.log(response)
+  //     console.table(response)
+  //     const { task } = response;
+  //     console.log(task)
+  //     if (task === "View all Departments") {
+  //       db.query("SELECT * FROM department;", function (err, results) {
+  //         if(err) throw err
+  //         console.table(results);
+  //       });
+  //     } else if (task === "View all Roles") {
+  //       db.query("SELECT * FROM role;", function (err, results) {
+  //         console.table(results);
+  //       });
+  //     } else {
+  //       db.query("SELECT * FROM employee;", function (err, results) {
+  //         console.table(results);
+  //       });
+  //     }
+  //   });
+};
+
+init();
