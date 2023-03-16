@@ -75,8 +75,7 @@ const init = () => {
             .then((answers) => {
             const departmentName = answers.departmentAnswer;
             // db.query to add new department
-                db.query("INSERT INTO department `$(answers.department}`
-                 VALUES ?;", function (err, results) {
+                db.query("INSERT INTO department `$(answers.department}` VALUES ?;", function (err, results) {
                 console.table(results);
                 init();
               });
