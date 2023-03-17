@@ -41,8 +41,6 @@ const init = () => {
     ])
 
     .then((response) => {
-      // console.log(response);
-      // console.table(response);
       const { task } = response;
       console.log(task);
       if (task === "View all Departments") {
@@ -76,34 +74,42 @@ const init = () => {
             // db.query to add new department
                 db.query("INSERT INTO department SET ?;", answers) 
                 console.table(answers);
-              })}
-            })}
-  //   .then((response) => {
-  //     console.log(response);
-  //     console.table(response);
-  //     const { add } = response;
-  //     console.log(add);
-  //     if (add === "Add a Department") {
-  //       db.query(
-  //         "INSERT INTO department (name) VALUES ?;",
-  //         function (err, results) {
-  //           if (err) throw err;
-  //           console.table(results);
-  //         }
-  //       );
-  //     } else if (add === "Add a Role") {
-  //       db.query("INSERT INTO role (name) VALUES ?;", function (err, results) {
-  //         console.table(results);
-  //       });
-  //     } else {
-  //       db.query(
-  //         "INSERT INTO employee (name) VALUES ?;",
-  //         function (err, results) {
-  //           console.table(results);
-  //         }
-  //       );
-  //     }
-  //   });
+              });
+
+    } else if (task === "Add a Role") {
+            // *****************************************************************
+                    inquirer
+                        .prompt([
+                        {
+                            type: 'input',
+                            message: "Please type the name of the role that you would like to add to the list:",
+                            name: 'name',
+                        },
+                    ])
+            
+                        .then(answers => {
+                        // db.query to add new department
+                            db.query("INSERT INTO role SET ?;", answers) 
+                            console.table(answers);
+                          })};
+
+    } else if (task === "Add an employee") {
+            // *****************************************************************
+                    inquirer
+                        .prompt([
+                        {
+                            type: 'input',
+                            message: "Please type the name of the employee that you would like to add to the list:",
+                            name: 'name',
+                        },
+                    ])
+            
+                        .then(answers => {
+                        // db.query to add new department
+                            db.query("INSERT INTO employee SET ?;", answers) 
+                            console.table(answers);
+                        })};   
+              
 
   //  .then((response) => {
   //     console.log(response)
@@ -126,4 +132,5 @@ const init = () => {
   //     }
   //   });
 
-init(); 
+ )}
+    init(); 
