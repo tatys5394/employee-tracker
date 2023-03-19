@@ -66,16 +66,19 @@ const init = () => {
             {
               type: "input",
               message:
-                "Please type the name of the department that you would like to add to the list:",
+                "Please type the name of the department that you would like to add:",
               name: "name",
             },
           ])
 
           .then((answers) => {
             // db.query to add new department
-            db.query("INSERT INTO department SET ?;", answers);
+            db.query("INSERT INTO department (name) VALUES (?)", answers.name);
             console.table(answers);
-          });
+            init();
+          })
+
+        
       } else if (task === "Add a Role") {
         // *****************************************************************
         inquirer
@@ -83,16 +86,30 @@ const init = () => {
             {
               type: "input",
               message:
-                "Please type the name of the role that you would like to add to the list:",
-              name: "name",
+                "Please type the name of the role that you would like to add:",
+              name: "title",
+            }, 
+            
+            {
+              type: "input",
+              message: "Please type the salary for this role:",
+              name: "salary"
             },
+
+            {
+              type: "input",
+              message: "Please type the number of the department ID for this role:",
+              name: "department_id"
+            }
           ])
 
           .then((answers) => {
-            // db.query to add new department
-            db.query("INSERT INTO role SET ?;", answers);
+            // db.query to add new role
+            db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answers.title, answers.salary, answers.department_id]);
             console.table(answers);
+            init();
           });
+
       } else if (task === "Add an employee") {
         // *****************************************************************
         inquirer
@@ -100,17 +117,64 @@ const init = () => {
             {
               type: "input",
               message:
-                "Please type the name of the employee that you would like to add to the list:",
-              name: "name",
+                "Please type the first name of the employee that you would like to add:",
+              name: "first_name"
             },
+
+            {
+              type: "input",
+              message:
+                "Please type the last name of the employee that you would like to add:",
+              name: "last_name"
+            },
+
+            {
+              type: "input",
+              message:
+                "Please type the role ID of the employee that you would like to add:",
+              name: "role_id"
+            },
+
+            {
+              type: "input",
+              message:
+                "Please type the manager ID of the employee that you would like to add:",
+              name: "manager_id",
+            }
           ])
 
           .then((answers) => {
-            // db.query to add new department
-            db.query("INSERT INTO employee SET ?;", answers);
+            // db.query to add new employee
+            db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?, ?, ?, ?)", answers.first_name, answers.last_name, answers.role_id, answers.manager_id);
             console.table(answers);
+            init();
           });
-      }
-    });
+
+      } else if (task === "Update an employee role") {
+        // *****************************************************************
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              message:
+                "Please type the employee ID that you want to update:",
+              name: "employee",
+            }, 
+
+            {
+              type: "input",
+              message:
+                "Please type the new role ID:",
+              name: "role",
+            }
+          ])
+
+            .then((answers) => {
+              // db.query to add new department
+              db.query("UPDATE employee SET role_id = ?  WHERE id = ?", [answers.role, answers.employee]);
+              console.table(answers);
+              init();
+            })
+        }});
 };
 init();
