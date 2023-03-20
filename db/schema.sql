@@ -35,4 +35,7 @@ CREATE TABLE employee (
 
 
 
-
+connection.query('INSERT INTO posts SET ?', {title: 'test'}, function (error, results, fields) {
+  if (error) throw error;
+  console.log(results.insertId);
+});

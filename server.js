@@ -150,6 +150,8 @@ const init = () => {
             init();
           });
 
+          
+
       } else if (task === "Update an employee role") {
         // *****************************************************************
         inquirer
