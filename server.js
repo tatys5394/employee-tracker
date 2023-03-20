@@ -145,7 +145,7 @@ const init = () => {
 
           .then((answers) => {
             // db.query to add new employee
-            db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?, ?, ?, ?)", answers.first_name, answers.last_name, answers.role_id, answers.manager_id);
+            db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?, ?, ?, ?)", [answers.first_name, answers.last_name, answers.role_id, answers.manager_id]);
             console.table(answers);
             init();
           });
