@@ -110,7 +110,7 @@ const init = () => {
             init();
           });
 
-      } else if (task === "Add an employee") {
+      } else if (task === "Add an Employee") {
         // *****************************************************************
         inquirer
           .prompt([
